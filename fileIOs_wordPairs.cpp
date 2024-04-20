@@ -13,7 +13,7 @@ void sentenceSplitter( std::string& fname, std::vector<std::string>& sentences) 
             sentences.push_back(currentSentence);
             currentSentence.clear(); // Reset current sentence
         } else if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
-            if (!currentSentence.empty()) {
+            if (!currentSentence.empty() && character != '\n') {
                 sentences.push_back(currentSentence);
             }
             currentSentence.clear();
