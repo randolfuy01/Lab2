@@ -1,8 +1,0 @@
-# ninja log v5
-419	450	1713594229753399603	fileIOs_wordPairs	bd5d7fccf756be1b
-5	427	1713593305213437868	CMakeFiles/fileIOs_wordPairs.dir/main.cpp.o	7412c6e2b34e3830
-2	412	1713594229713823624	CMakeFiles/fileIOs_wordPairs.dir/fileIOs_wordPairs.cpp.o	21a9adf721450a56
-0	56	1713638902219792013	build.ninja	aa973e8721139ac1
-2	414	1713638910480237459	CMakeFiles/fileIOs_wordPairs.dir/main.cpp.o	bb74cb49ef067000
-1	426	1713638910491458014	CMakeFiles/fileIOs_wordPairs.dir/fileIOs_wordPairs.cpp.o	e7651df79aba73fb
-426	522	1713638910587512207	fileIOs_wordPairs	af20a44a5276e83a
