@@ -1,30 +1,43 @@
 #include "fileIOs_wordPairs.h"
 
-void sentenceSplitter( std::string& fname, std::vector<std::string>& sentences) {
-    std::string currentSentence;
-    std::string text = getText(fname);
-    for (char character : text) {
-        currentSentence += character;
-        if (character == '.' || character == '?') {
-            if ((character == '.' && currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"') ||
-                (character == '?' && currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"')) {
-                continue;
-            }
-            sentences.push_back(currentSentence);
-            currentSentence.clear(); // Reset current sentence
-        } else if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
-            if (!currentSentence.empty() && character != '\n') {
-                sentences.push_back(currentSentence);
-            }
-            currentSentence.clear();
-        }
-    }
+// Adds non-empty string to sentences vector and resets string to empty
+void addSentence(std::vector<std::string>& sentences, std::string& currentSentence) {
     if (!currentSentence.empty()) {
         sentences.push_back(currentSentence);
+        currentSentence.clear(); // Reset current sentence
     }
 }
 
-// Read a file from input
+// Splits file text into sentences
+void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
+    std::string currentSentence;
+    std::string text = getText(fname);
+    for (char character : text) {
+        // Skip if leading character is a whitespace or quotations
+        if ((isspace(character) || character == '"') && currentSentence.empty()) {
+            continue;
+        }
+
+        currentSentence += character;
+
+        // Handling periods and question marks (end of a sentence)
+        if (character == '.' || character == '?') {
+            if (currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"') {
+                continue;
+            }
+            addSentence(sentences, currentSentence);
+        }
+
+        // Handling newlines and colons
+        else if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
+            addSentence(sentences, currentSentence);
+        }
+    }
+    // Handle the last sentence
+    addSentence(sentences, currentSentence);
+}
+
+// Retrieves text from a file.
 std::string getText(std::string& fname) {
     std::ifstream inFS(fname);
     std::string fileText;

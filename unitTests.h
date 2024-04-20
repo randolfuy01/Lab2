@@ -25,7 +25,7 @@ void sentenceSplitterTest() {
     std::vector<std::string> sentencesVector;
     sentenceSplitter(fileName, sentencesVector);
     for (const auto& sentence : sentencesVector) {
-        std::cout << sentence << std::endl;
+        std::cout << "- " << sentence << std::endl;
     }
 }
 
