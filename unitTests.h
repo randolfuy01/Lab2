@@ -3,14 +3,14 @@
 #include "fileIOs_wordPairs.h"
 
 bool fileInputTest1() {
-    std::string fileName = "document1.txt";
+    std::string fileName = "../test_files/document1.txt";
     std::string result = getText(fileName);
     std::string expected = "hello, this is the first input test.\n";
     return result == expected;
 }
 
 bool fileInputTest2() {
-    std::string fileName = "document2.txt";
+    std::string fileName = "../test_files/document2.txt";
     std::string result = getText(fileName);
     std::string expected = "The first story is about connecting the dots.\n"
                            "\n"
@@ -21,7 +21,7 @@ bool fileInputTest2() {
 }
 
 void sentenceSplitterTest() {
-    std::string fileName = "document2.txt";
+    std::string fileName = "../test_files/document2.txt";
     std::vector<std::string> sentencesVector;
     sentenceSplitter(fileName, sentencesVector);
     for (const auto& sentence : sentencesVector) {
