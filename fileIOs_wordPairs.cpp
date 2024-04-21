@@ -18,22 +18,13 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
             continue;
         }
 
-        // End of sentence detected (period or question mark)
-        if (character == '.' || character == '?') {
-            // Skip if the second last character is a quote (handling quoted dialogue)
-            if (currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"') {
-                continue;
-            }
-
+        // End of sentence detected (period, question mark, or newline)
+        if (character == '.' || character == '?' || character == '\n') {
             addSentence(sentences, currentSentence);
             continue;
         }
 
-        // Handling newlines or colons following newlines
-        if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
-            addSentence(sentences, currentSentence);
-        }
-
+        // Append current char to sentence string
         currentSentence += character;
 
     }
