@@ -13,12 +13,17 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
     std::string currentSentence;
     std::string text = getText(fname);
     for (char character : text) {
-        // Skip if leading character is a whitespace or quotations
-        if ((isspace(character) || character == '"') && currentSentence.empty()) {
+        // Skip if leading character is a whitespace
+        if ((isspace(character)) && currentSentence.empty()) {
             continue;
         }
 
-        // End of sentence detected (period, question mark, or newline)
+        // Skip all punctuation starting or within a sentence
+        if (character == ',' || character == ';' || character == ':' || character == '"') {
+          continue;
+        }
+
+        // End of sentence detected (period, question mark, or newline), add sentence to vector
         if (character == '.' || character == '?' || character == '\n') {
             addSentence(sentences, currentSentence);
             continue;
