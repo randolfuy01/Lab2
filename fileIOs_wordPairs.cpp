@@ -1,4 +1,11 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+
 #include "fileIOs_wordPairs.h"
+
+void toLowerCase(std::vector<std::string>& vector, std::string basicString);
 
 // Retrieves text from a file.
 std::string getText(std::string& fname) {
@@ -54,18 +61,42 @@ void addSentence(std::vector<std::string>& sentences, std::string& currentSenten
 
 // Function to compute the frequency of unique, unordered word pairs from a list of sentences, storing results in a provided map.
 void wordpairMapping(std::vector<std::string>& sentences,std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map) {
-  // For each sentence (The big red fox went down the street)
+  std::vector<std::string> lowerCaseSentences;
+  toLowerCase(sentences, lowerCaseSentences);
+
+
+  std::vector<std::string> sentenceTokens;
+  std::string token;
+  std::istringstream iss;
   for (const std::string& sentence : sentences) {
+    iss.str(sentence);
+    iss.clear();
+    while (std::getline(iss, token, ' ')) {
+      sentenceTokens.push_back(token);
+    }
 
   }
-  // Tokenize: 1. The 2. big 3. red 4.fox 5.went ...
+
+  // For each sentence (The big red fox went down the street)
   // Lower case each word
+  // Tokenize: 1. The 2. big 3. red 4.fox 5.went ...
   // Alphabatize the list of words
   // Compare each word with each other,
   // If the pair is unique, place into wordpairFreq_map and increase its frequency
   // If the pair is not unique, increase the frequency
 
-  std::vector<std::string> tokens;
 
+
+}
+
+// Transcribes each string in stringVector to lowercase and stores them in lowerCaseStrings, leaving stringVector unchanged.
+void toLowerCase(std::vector<std::string>& stringVector, std::vector<std::string>& lowerCaseStrings) {
+  std::string tempSentence;
+  std::string lowerCaseSentence;
+  for (const std::string& sentence : stringVector) {
+    tempSentence = sentence;
+    std::transform(tempSentence.begin(), tempSentence.end(), tempSentence.begin(), [](unsigned char c) {return std::tolower(c); });
+    lowerCaseStrings.push_back(tempSentence);
+  }
 
 }

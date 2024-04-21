@@ -1,9 +1,7 @@
 #ifndef FILEIOS_WORDPAIRS_FILEIOS_WORDPAIRS_H
 #define FILEIOS_WORDPAIRS_FILEIOS_WORDPAIRS_H
-#include <iostream>
-#include <vector>
-#include <fstream>
 #include <string>
+#include <vector>
 #include <map>
 
 /**
@@ -49,4 +47,13 @@ void addSentence(std::vector<std::string>& sentences, std::string& currentSenten
  */
 void wordpairMapping(std::vector<std::string>& sentences,std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map);
 
+/**
+ * @brief Transcribes all the strings in an input vector into lowercase versions and stores them in an output vector.
+ *
+ * @param stringVector The vector of strings to be transcribed into lowercase. The vector is passed by reference but remains unchanged.
+ * @param lowerCaseStrings An output parameter (passed as a non-const reference) to hold the transcribed lowercase strings.
+ *
+ * @note The original input vector (stringVector) remains unchanged. A new vector (lowerCaseStrings) is created with all the strings transcribed to lowercase.
+ */
+void toLowerCase(std::vector<std::string>& stringVector, std::vector<std::string>& lowerCaseStrings);
 #endif

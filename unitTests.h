@@ -43,6 +43,16 @@ bool sentenceSplitterTest() {
   return sentencesVector == expectedSentencesVector;
 }
 
+bool toLowerCaseTest() {
+    std::vector<std::string> input = {"Hello There My Friend", "WORLD", "tESt"};
+    std::vector<std::string> expectedOutput = {"hello there my friend", "world", "test"};
+    std::vector<std::string> actualOutput;
+
+    toLowerCase(input, actualOutput);
+
+    return expectedOutput == actualOutput;
+}
+
 bool wordpairMappingTest() {
   std::string fileName = "../test_files/document3.txt";
   std::map<std::pair<std::string, std::string>, int> expectedWordPairFreqMap = {
@@ -94,6 +104,11 @@ void runTests() {
     if (!sentenceSplitterTest()) {
         allTestPassing = false;
         std::cout << "- Failed sentenceSplitter() Test" << std::endl;
+    }
+
+    if (!toLowerCaseTest()) {
+        allTestPassing = false;
+        std::cout << "- Failed toLowerCase() Test" << std::endl;
     }
 
     if (!wordpairMappingTest()) {
