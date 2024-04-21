@@ -12,9 +12,10 @@ void addSentence(std::vector<std::string>& sentences, std::string& currentSenten
 void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
     std::string currentSentence;
     std::string text = getText(fname);
+
     for (char character : text) {
-        // Skip if leading character is a whitespace
-        if ((isspace(character)) && currentSentence.empty()) {
+        // Skip if leading character is a whitespace or quotation
+        if (currentSentence.empty() && (isspace(character) || character == '"')) {
             continue;
         }
 
@@ -36,7 +37,7 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
 
         currentSentence += character;
 
-    }
+    } // end for loop
     // Add any remaining sentence at the end of the file; if empty, nothing will be added to sentences list
     addSentence(sentences, currentSentence);
 }
