@@ -1,6 +1,5 @@
 #ifndef FILEIOS_WORDPAIRS_FILEIOS_WORDPAIRS_H
 #define FILEIOS_WORDPAIRS_FILEIOS_WORDPAIRS_H
-
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -21,7 +20,7 @@ std::string getText(std::string& fname);
  * @param fname The name of the file to process.
  * @param sentences The vector in which to store the sentences.
  */
-void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences);
+void sentenceSplitter( std::string& fname, std::vector<std::string>& sentences);
 
 /**
  * @brief If the string is not empty, adds it to the list of sentences and clears it.
