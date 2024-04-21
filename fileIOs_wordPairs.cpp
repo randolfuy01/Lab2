@@ -24,6 +24,7 @@ std::string getText(std::string& fname) {
 void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
     std::string currentSentence;
     std::string text = getText(fname);
+
     for (char character : text) {
         // Skip if leading character is a whitespace or quotations
         if ((isspace(character) || character == '"') && currentSentence.empty()) {
@@ -36,10 +37,14 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
             continue;
         }
 
-        // Append current char to sentence string
+        // Handling newlines or colons following newlines
+        if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
+            addSentence(sentences, currentSentence);
+        }
+
         currentSentence += character;
 
-    }
+    } // end for loop
     // Add any remaining sentence at the end of the file; if empty, nothing will be added to sentences list
     addSentence(sentences, currentSentence);
 }
