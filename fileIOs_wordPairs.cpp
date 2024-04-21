@@ -25,7 +25,7 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
     std::string currentSentence;
     std::string text = getText(fname);
 
-    for (char character : text) {
+    for (const char& character : text) {
         // Skip if leading character is a whitespace or quotations
         if ((isspace(character) || character == '"') && currentSentence.empty()) {
             continue;
@@ -35,11 +35,6 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
         if (character == '.' || character == '?' || character == '\n') {
             addSentence(sentences, currentSentence);
             continue;
-        }
-
-        // Handling newlines or colons following newlines
-        if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
-            addSentence(sentences, currentSentence);
         }
 
         currentSentence += character;
@@ -59,5 +54,18 @@ void addSentence(std::vector<std::string>& sentences, std::string& currentSenten
 
 // Function to compute the frequency of unique, unordered word pairs from a list of sentences, storing results in a provided map.
 void wordpairMapping(std::vector<std::string>& sentences,std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map) {
+  // For each sentence (The big red fox went down the street)
+  for (const std::string& sentence : sentences) {
+
+  }
+  // Tokenize: 1. The 2. big 3. red 4.fox 5.went ...
+  // Lower case each word
+  // Alphabatize the list of words
+  // Compare each word with each other,
+  // If the pair is unique, place into wordpairFreq_map and increase its frequency
+  // If the pair is not unique, increase the frequency
+
+  std::vector<std::string> tokens;
+
 
 }
