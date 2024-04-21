@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <set>
 
 #include "fileIOs_wordPairs.h"
 
@@ -65,8 +66,12 @@ void wordpairMapping(std::vector<std::string>& sentences,
 
     toLowerCase(sentences, lowerCaseSentences);
     tokenize(lowerCaseSentences, sentenceTokensList);
-    alphabetize(sentenceTokensList);
+    sortAndRemoveDuplicates(sentenceTokensList);
 
+    // Compare each word with each other,
+    // compare the first token to all other tokens
+    // get the second token
+    // compare the second token to all other tokens
 
 
     // For each sentence (The big red fox went down the street)
@@ -123,9 +128,11 @@ void tokenize(const std::vector<std::string>& sentences, std::vector<std::vector
     }
 }
 
-// Alphabetizes a vector of vectors of strings.
-void alphabetize(std::vector<std::vector<std::string>>& unsortedSentenceTokens) {
-    for (std::vector<std::string>& tokenGroup: unsortedSentenceTokens) {
-        std::sort(tokenGroup.begin(), tokenGroup.end());
+// Sorts the tokens in each group and removes duplicates
+void sortAndRemoveDuplicates(std::vector<std::vector<std::string>>& sentenceTokensList) {
+    for (std::vector<std::string>& tokenGroup: sentenceTokensList) {
+        std::set<std::string> temp(tokenGroup.begin(), tokenGroup.end());
+        tokenGroup.assign(temp.begin(), temp.end());
     }
 }
+

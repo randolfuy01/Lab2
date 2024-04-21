@@ -1,5 +1,6 @@
 #ifndef FILEIOS_WORDPAIRS_FILEIOS_WORDPAIRS_H
 #define FILEIOS_WORDPAIRS_FILEIOS_WORDPAIRS_H
+
 #include <string>
 #include <vector>
 #include <map>
@@ -18,7 +19,7 @@ std::string getText(std::string& fname);
  * @param fname The name of the file to process.
  * @param sentences The vector in which to store the sentences.
  */
-void sentenceSplitter( std::string& fname, std::vector<std::string>& sentences);
+void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences);
 
 /**
  * @brief If the string is not empty, adds it to the list of sentences and clears it.
@@ -45,7 +46,8 @@ void addSentence(std::vector<std::string>& sentences, std::string& currentSenten
  *
  * @warning The function does not return anything, it directly updates the wordpairFreq_map variable.
  */
-void wordpairMapping(std::vector<std::string>& sentences,std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map);
+void wordpairMapping(std::vector<std::string>& sentences,
+                     std::map<std::pair<std::string, std::string>, int>& wordpairFreq_map);
 
 /**
  * @brief Transcribes all the strings in an input vector into lowercase versions and stores them in an output vector.
@@ -71,17 +73,16 @@ void toLowerCase(const std::vector<std::string>& stringVector, std::vector<std::
 void tokenize(const std::vector<std::string>& sentences, std::vector<std::vector<std::string>>& sentenceTokensList);
 
 /**
- * @brief Alphabetizes a vector of vectors of strings.
+ * @brief Sorts the tokens in each group and removes duplicates
  *
- * This function takes in a reference to a vector of vectors storing strings,
- * which represent unsorted sentence tokens. It modifies the vector in-place
- * to sort the sentence tokens in alphabetical order.
+ * For each group of tokens in the given list, this function removes duplicate tokens and
+ * sorts the remaining tokens in lexicographical order.
  *
- * @param unsortedSentenceTokens A reference to a vector of vectors of strings
- *                               that need to be alphabetized.
- *
+ * @param sentenceTokensList A reference to a list of token groups. Each group is a vector
+ *                           of strings, and the list is also a vector. The function
+ *                           modifies this list in place.
  */
-void alphabetize(std::vector<std::vector<std::string>>& unsortedSentenceTokens);
+void sortAndRemoveDuplicates(std::vector<std::vector<std::string>>& sentenceTokensList);
 
 
 #endif
