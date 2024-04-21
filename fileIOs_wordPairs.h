@@ -70,4 +70,18 @@ void toLowerCase(const std::vector<std::string>& stringVector, std::vector<std::
  */
 void tokenize(const std::vector<std::string>& sentences, std::vector<std::vector<std::string>>& sentenceTokensList);
 
+/**
+ * @brief Alphabetizes a vector of vectors of strings.
+ *
+ * This function takes in a reference to a vector of vectors storing strings,
+ * which represent unsorted sentence tokens. It modifies the vector in-place
+ * to sort the sentence tokens in alphabetical order.
+ *
+ * @param unsortedSentenceTokens A reference to a vector of vectors of strings
+ *                               that need to be alphabetized.
+ *
+ */
+void alphabetize(std::vector<std::vector<std::string>>& unsortedSentenceTokens);
+
+
 #endif

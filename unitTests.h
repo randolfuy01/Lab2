@@ -65,6 +65,20 @@ bool tokenizeTest() {
     return expectedTokens == actualTokens;
 }
 
+bool alphabetizeTest() {
+    std::vector<std::vector<std::string>> testVec = {{"apple", "banana",   "cherry"},
+                                                     {"dog",   "elephant", "cat"},
+                                                     {"grape", "orange",   "fig"}};
+
+    std::vector<std::vector<std::string>> expectedOutput = {{"apple", "banana", "cherry"},
+                                                            {"cat",   "dog",    "elephant"},
+                                                            {"fig",   "grape",  "orange"}};
+
+    alphabetize(testVec);
+
+    return expectedOutput == testVec;
+}
+
 bool wordpairMappingTest() {
   std::string fileName = "../test_files/document3.txt";
   std::map<std::pair<std::string, std::string>, int> expectedWordPairFreqMap = {
@@ -126,6 +140,11 @@ void runTests() {
     if (!tokenizeTest()) {
         allTestPassing = false;
         std::cout << "- Failed tokenize() Test" << std::endl;
+    }
+
+    if (!alphabetizeTest()) {
+        allTestPassing = false;
+        std::cout << "- Failed alphabetize() Test" << std::endl;
     }
 
     if (!wordpairMappingTest()) {

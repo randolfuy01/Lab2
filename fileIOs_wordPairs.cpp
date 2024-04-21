@@ -5,10 +5,6 @@
 
 #include "fileIOs_wordPairs.h"
 
-void toLowerCase(std::vector<std::string>& vector, std::string basicString);
-
-void tokenize(std::vector<std::string> vector1, std::vector<std::string> vector2);
-
 // Retrieves text from a file.
 std::string getText(std::string& fname) {
     std::ifstream inFS(fname);
@@ -34,7 +30,7 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
     std::string currentSentence;
     std::string text = getText(fname);
 
-    for (const char& character : text) {
+    for (const char& character: text) {
         // Skip if leading character is a whitespace or quotations
         if ((isspace(character) || character == '"') && currentSentence.empty()) {
             continue;
@@ -62,22 +58,24 @@ void addSentence(std::vector<std::string>& sentences, std::string& currentSenten
 }
 
 // Function to compute the frequency of unique, unordered word pairs from a list of sentences, storing results in a provided map.
-void wordpairMapping(std::vector<std::string>& sentences,std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map) {
-  std::vector<std::string> lowerCaseSentences;
-  std::vector<std::vector<std::string>> sentenceTokensList;
+void wordpairMapping(std::vector<std::string>& sentences,
+                     std::map<std::pair<std::string, std::string>, int>& wordpairFreq_map) {
+    std::vector<std::string> lowerCaseSentences;
+    std::vector<std::vector<std::string>> sentenceTokensList;
 
-  toLowerCase(sentences, lowerCaseSentences);
-  tokenize(lowerCaseSentences, sentenceTokensList);
+    toLowerCase(sentences, lowerCaseSentences);
+    tokenize(lowerCaseSentences, sentenceTokensList);
+    alphabetize(sentenceTokensList);
 
 
 
-  // For each sentence (The big red fox went down the street)
-  // Lower case each word (the big red fox wend down the street)
-  // Tokenize: (1.the 2.big 3.red 4.fox 5.went ...)
-  // Alphabatize the list of words
-  // Compare each word with each other,
-  // If the pair is unique, place into wordpairFreq_map and increase its frequency
-  // If the pair is not unique, increase the frequency
+    // For each sentence (The big red fox went down the street)
+    // Lower case each word (the big red fox wend down the street)
+    // Tokenize: (1.the 2.big 3.red 4.fox 5.went ...)
+    // Alphabetize the list of words (big, fox, the, went,..)
+    // Compare each word with each other,
+    // If the pair is unique, place into wordpairFreq_map and increase its frequency
+    // If the pair is not unique, increase the frequency
 
 
 
@@ -122,5 +120,12 @@ void tokenize(const std::vector<std::string>& sentences, std::vector<std::vector
 
         // Add the vector of tokens for the current sentence to the main list
         sentenceTokensList.push_back(sentenceTokens);
+    }
+}
+
+// Alphabetizes a vector of vectors of strings.
+void alphabetize(std::vector<std::vector<std::string>>& unsortedSentenceTokens) {
+    for (std::vector<std::string>& tokenGroup: unsortedSentenceTokens) {
+        std::sort(tokenGroup.begin(), tokenGroup.end());
     }
 }
