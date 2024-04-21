@@ -53,6 +53,18 @@ bool toLowerCaseTest() {
     return expectedOutput == actualOutput;
 }
 
+bool tokenizeTest() {
+    std::vector<std::string> sentences = {"Hello there", "How are you", "Nice to meet you"};
+    std::vector<std::vector<std::string>> expectedTokens = {{"Hello", "there"},
+                                                            {"How",   "are", "you"},
+                                                            {"Nice",  "to",  "meet", "you"}};
+    std::vector<std::vector<std::string>> actualTokens;
+
+    tokenize(sentences, actualTokens);
+
+    return expectedTokens == actualTokens;
+}
+
 bool wordpairMappingTest() {
   std::string fileName = "../test_files/document3.txt";
   std::map<std::pair<std::string, std::string>, int> expectedWordPairFreqMap = {
@@ -109,6 +121,11 @@ void runTests() {
     if (!toLowerCaseTest()) {
         allTestPassing = false;
         std::cout << "- Failed toLowerCase() Test" << std::endl;
+    }
+
+    if (!tokenizeTest()) {
+        allTestPassing = false;
+        std::cout << "- Failed tokenize() Test" << std::endl;
     }
 
     if (!wordpairMappingTest()) {

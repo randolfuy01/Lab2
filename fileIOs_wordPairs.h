@@ -55,5 +55,19 @@ void wordpairMapping(std::vector<std::string>& sentences,std::map<std::pair<std:
  *
  * @note The original input vector (stringVector) remains unchanged. A new vector (lowerCaseStrings) is created with all the strings transcribed to lowercase.
  */
-void toLowerCase(std::vector<std::string>& stringVector, std::vector<std::string>& lowerCaseStrings);
+void toLowerCase(const std::vector<std::string>& stringVector, std::vector<std::string>& lowerCaseStrings);
+
+/**
+ * @brief Splits each sentence in the input vector into words (tokens) and stores
+ * them in the output list where each item is a vector of tokens corresponding to a sentence.
+ *
+ * @param sentences Input vector of sentences to be tokenized. Each string in the vector is treated as a separate sentence.
+ * @param sentenceTokensList Output parameter to hold the list of token vectors. Each element in this vector corresponds
+ * to a sentence in the input and is a vector of its tokens (words).
+ *
+ * @note The input vector (sentences) remains unchanged. A new list
+ * (sentenceTokensList) is populated with vectors of tokens.
+ */
+void tokenize(const std::vector<std::string>& sentences, std::vector<std::vector<std::string>>& sentenceTokensList);
+
 #endif
