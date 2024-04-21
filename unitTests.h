@@ -43,6 +43,39 @@ bool sentenceSplitterTest() {
   return sentencesVector == expectedSentencesVector;
 }
 
+bool wordpairMappingTest() {
+  std::string fileName = "../test_files/document3.txt";
+  std::map<std::pair<std::string, std::string>, int> expectedWordPairFreqMap = {
+          {{"about",      "connecting"}, 3},
+          {{"about",      "dots"},       3},
+          {{"about",      "first"},      3},
+          {{"about",      "is"},         3},
+          {{"about",      "story"},      3},
+          {{"about",      "the"},        3},
+          {{"connecting", "dots"},       3},
+          {{"connecting", "first"},      3},
+          {{"connecting", "is"},         3},
+          {{"connecting", "story"},      3},
+          {{"connecting", "the"},        3},
+          {{"dots",       "first"},      3},
+          {{"dots",       "is"},         3},
+          {{"dots",       "story"},      3},
+          {{"dots",       "the"},        3},
+          {{"first",      "is"},         3},
+          {{"first",      "story"},      3},
+          {{"first",      "the"},        3},
+          {{"is",         "story"},      3},
+          {{"is",         "the"},        3},
+          {{"story",      "the"},        3}
+  };
+  std::vector<std::string> sentencesVector;
+  sentenceSplitter(fileName, sentencesVector);
+  std::map<std::pair<std::string, std::string>, int> actualWordPairFreqMap;
+  wordpairMapping(sentencesVector, actualWordPairFreqMap);
+
+  return actualWordPairFreqMap == expectedWordPairFreqMap;
+}
+
 void runTests() {
 
     std::cout << "Begin testing..." << std::endl;
@@ -51,21 +84,27 @@ void runTests() {
 
     if (!fileInputTest1()) {
         allTestPassing = false;
-        std::cout << "Failed File Input Test 1" << std::endl;
+        std::cout << "- Failed File Input Test 1" << std::endl;
     }
     if (!fileInputTest2()) {
         allTestPassing = false;
-        std::cout << "Failed File Input Test 2" << std::endl;
+        std::cout << "- Failed File Input Test 2" << std::endl;
     }
 
     if (!sentenceSplitterTest()) {
         allTestPassing = false;
-        std::cout << "Failed sentenceSplitter() Test" << std::endl;
+        std::cout << "- Failed sentenceSplitter() Test" << std::endl;
+    }
+
+    if (!wordpairMappingTest()) {
+      allTestPassing = false;
+      std::cout << "- Failed wordpairMapping() Test" << std::endl;
     }
 
     if (allTestPassing) {
-        std::cout << "All test passing." << std::endl;
+        std::cout << "All tests passed. ";
     }
+    std::cout << "End of testing." << std::endl;
 
 }
 #endif //FILEIOS_WORDPAIRS_UNITTESTS_H
