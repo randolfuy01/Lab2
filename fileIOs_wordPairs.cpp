@@ -22,31 +22,36 @@ std::string getText(std::string& fname) {
 
 // Splits file text into sentences
 void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
-  std::string currentSentence;
-  std::string text = getText(fname);
-  for (char character : text) {
-    // Skip if leading character is a whitespace
-    if ((isspace(character)) && currentSentence.empty()) {
-      continue;
-    }
+    std::string currentSentence;
+    std::string text = getText(fname);
 
-    // Skip all punctuation starting or within a sentence
-    if (character == ',' || character == ';' || character == ':' || character == '"') {
-      continue;
-    }
+    for (char character : text) {
+        // Skip if leading character is a whitespace or quotation
+        if (currentSentence.empty() && (isspace(character) || character == '"')) {
+            continue;
+        }
 
-    // End of sentence detected (period, question mark, or newline), add sentence to vector
-    if (character == '.' || character == '?' || character == '\n') {
-      addSentence(sentences, currentSentence);
-      continue;
-    }
+        // End of sentence detected (period or question mark)
+        if (character == '.' || character == '?') {
+            // Skip if the second last character is a quote (handling quoted dialogue)
+            if (currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"') {
+                continue;
+            }
 
-    // Append current char to sentence string
-    currentSentence += character;
+            addSentence(sentences, currentSentence);
+            continue;
+        }
 
-  }
-  // Add any remaining sentence at the end of the file; if empty, nothing will be added to sentences list
-  addSentence(sentences, currentSentence);
+        // Handling newlines or colons following newlines
+        if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
+            addSentence(sentences, currentSentence);
+        }
+
+        currentSentence += character;
+
+    } // end for loop
+    // Add any remaining sentence at the end of the file; if empty, nothing will be added to sentences list
+    addSentence(sentences, currentSentence);
 }
 
 // Adds non-empty string to sentences vector and resets string to empty
