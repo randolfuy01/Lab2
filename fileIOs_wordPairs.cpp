@@ -43,3 +43,37 @@ std::string getText(std::string& fname) {
     inFS.close();
     return fileText;
 }
+
+void wordpairMapping(std::vector<std::string>& sentences, std::map<std::pair<std::string, std::string>, int>& wordpairFreq_map) {
+    for (const auto& sentence : sentences) {
+        std::set<std::string> words; // Use a set instead of a vector
+        std::stringstream ss(sentence);
+        std::string word;
+        while (ss >> word) {
+            // remove punctuation and make word lowercase
+            if (std::ispunct(word.back()))
+                word.pop_back();
+            std::transform(word.begin(), word.end(), word.begin(), ::tolower);
+
+            words.insert(word);
+        }
+
+        // create word pairs
+        for (auto i = words.begin(); i != words.end(); ++i) {
+            for (auto j = std::next(i); j != words.end(); ++j) { // Use std::next to get the next iterator 
+                std::pair<std::string, std::string> wordpair = std::make_pair(*i, *j);
+                if (wordpairFreq_map.find(wordpair) == wordpairFreq_map.end()) {
+                    wordpairFreq_map[wordpair] = 1;
+                } else {
+                    wordpairFreq_map[wordpair]++;
+                }
+            }
+        }
+    }
+}
+
+void freqWordpairMmap(std::map< std::pair<std::string,std::string>, int> &wordpairFreq_map, std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_mmap ){
+    for (const auto& pair : wordpairFreq_map) {
+        freqWordpair_mmap.insert(std::make_pair(pair.second, pair.first));
+    }
+}
