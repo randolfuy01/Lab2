@@ -64,7 +64,6 @@ void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
 // Transcribes each string in stringVector to lowercase and stores them in lowerCaseStrings, leaving stringVector unchanged.
 void toLowerCase(const std::vector<std::string>& stringVector, std::vector<std::string>& lowerCaseStrings) {
     std::string tempSentence; // Temporary string to hold each individual sentence from stringVector
-    std::string lowerCaseSentence; // Not used in this function
 
     // Iterate over each sentence within stringVector
     for (const std::string& sentence: stringVector) {
