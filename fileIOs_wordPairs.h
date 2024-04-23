@@ -84,4 +84,16 @@ void sortAndRemoveDuplicates(std::vector<std::vector<std::string>>& sentenceToke
 void wordpairMapping(std::vector<std::string>& sentences,
                      std::map<std::pair<std::string, std::string>, int>& wordpairFreq_map);
 
+/**
+ * @brief Flips the mapping from word pairs to frequencies to a mapping from frequencies to word pairs.
+ *
+ * This function takes a map where the keys are word pairs (pairs of strings) and the values are their associated frequencies (integers).
+ * It inverts this map so that the frequencies become the keys and word pairs become the values in a multimap. A multimap is used
+ * because multiple word pairs can have the same frequency.
+ *
+ * @param wordpairFreq_map A constant reference to a map holding word pairs and their frequencies. This parameter is read-only.
+ * @param freqWordpair_mmap A reference to a multimap where frequencies are keys and word pairs are values to be modified.
+ */
+void freqWordpairMmap(std::map< std::pair<std::string,std::string>, int> &wordpairFreq_map, std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_mmap );
+
 #endif
