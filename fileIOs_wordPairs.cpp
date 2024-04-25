@@ -86,12 +86,25 @@ void freqWordpairMmap(std::map< std::pair<std::string,std::string>, int> &wordpa
     }
 }
 
-void printWordpairs(std::multimap<int, std::pair<std::string, std::string>>& freqWordpair_multimap, std::string outFname, int topCnt, int botCnt) {
+void printWordpairs(std::multimap<int, std::pair<std::string, std::string>> &freqWordpair_multimap, std::string outFname, int topCnt, int botCnt) {
     std::ofstream out(outFname);
     if (out.is_open()) {
-        for (const auto& pair : freqWordpair_multimap) {
-            out << "<" << pair.second.first << ", " << pair.second.second << ">: " << pair.first << std::endl;
+
+        std::multimap<int, std::pair<std::string, std::string>>::iterator iterator = freqWordpair_multimap.begin();
+
+        for (int i = 0; i < topCnt; ++i) {
+            out << "<" << (*iterator).second.first << ", " << (*iterator).second.second << ">: " << (*iterator).first << std::endl;
+            iterator++;
         }
+
+        iterator = freqWordpair_multimap.end();
+        std::advance(iterator, -botCnt);
+
+        for (int i = 0; i < botCnt; ++i) {
+            out << "<" << (*iterator).second.first << ", " << (*iterator).second.second << ">: " << (*iterator).first << std::endl;
+            iterator++;
+        }
+
         out.close();
     }
     else {

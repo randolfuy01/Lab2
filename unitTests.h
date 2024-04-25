@@ -76,6 +76,47 @@ bool wordpairMappingTest() {
     return passed;
 }
 
+bool printWordpairsTest() {
+    std::multimap<int, std::pair<std::string, std::string>> freqWordpair_multimap = {
+        {3, {"about", "connecting"}},
+        {3, {"about", "dots."}},
+        {3, {"about", "first"}},
+        {3, {"about", "is"}},
+        {3, {"about", "story"}},
+        {3, {"about", "the"}},
+        {3, {"connecting", "dots."}},
+        {3, {"connecting", "first"}},
+        {3, {"connecting", "is"}},
+        {3, {"connecting", "story"}},
+        {3, {"connecting", "the"}},
+        {3, {"dots.", "first"}},
+        {3, {"dots.", "is"}},
+        {3, {"dots.", "story"}},
+        {3, {"dots.", "the"}},
+        {3, {"first", "is"}},
+        {3, {"first", "story"}},
+        {3, {"first", "the"}},
+        {3, {"is", "story"}},
+        {3, {"is", "the"}},
+        {3, {"story", "the"}}
+    };
+
+    std::string outFname = "output.txt";
+    int topCnt = 3;
+    int botCnt = 3;
+    printWordpairs(freqWordpair_multimap, outFname, topCnt, botCnt);
+
+    std::string expected = "<about, connecting>: 3\n"
+                           "<about, dots.>: 3\n"
+                           "<about, first>: 3\n"
+                           "<is, story>: 3\n"
+                           "<is, the>: 3\n"
+                           "<story, the>: 3\n";
+
+    std::string result = getText(outFname);
+    return result == expected;
+}
+
 
 void runTests() {
     if (fileInputTest1()) {
@@ -92,6 +133,11 @@ void runTests() {
         std::cout << "Passed Wordpair Mapping Test" << std::endl;
     } else {
         std::cout << "Failed Wordpair Mapping Test" << std::endl;
+    }
+    if (printWordpairsTest()) {
+        std::cout << "Passed Print Wordpairs Test" << std::endl;
+    } else {
+        std::cout << "Failed Print Wordpairs Test" << std::endl;
     }
 
     sentenceSplitterTest();
