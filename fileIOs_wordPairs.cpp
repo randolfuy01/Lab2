@@ -1,27 +1,35 @@
 #include "fileIOs_wordPairs.h"
 
-void sentenceSplitter( std::string& fname, std::vector<std::string>& sentences) {
-    std::string currentSentence;
-    std::string text = getText(fname);
-    for (char character : text) {
-        currentSentence += character;
-        if (character == '.' || character == '?') {
-            if ((character == '.' && currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"') ||
-                (character == '?' && currentSentence.size() >= 2 && currentSentence[currentSentence.size() - 2] == '"')) {
-                continue;
-            }
-            sentences.push_back(currentSentence);
-            currentSentence.clear(); // Reset current sentence
-        } else if (character == '\n' || (character == ':' && currentSentence.back() == '\n')) {
-            if (!currentSentence.empty()) {
-                sentences.push_back(currentSentence);
-            }
-            currentSentence.clear();
-        }
-    }
+// Adds non-empty string to sentences vector and resets string to empty
+void addSentence(std::vector<std::string>& sentences, std::string& currentSentence) {
     if (!currentSentence.empty()) {
         sentences.push_back(currentSentence);
+        currentSentence.clear(); // Reset current sentence
     }
+}
+
+// Splits file text into sentences
+void sentenceSplitter(std::string& fname, std::vector<std::string>& sentences) {
+    std::string currentSentence;
+    std::string text = getText(fname);
+
+    for (const char& character: text) {
+        // Skip if leading character is a whitespace or quotations
+        if ((isspace(character) || character == '"') && currentSentence.empty()) {
+            continue;
+        }
+
+        // End of sentence detected (period, question mark, or newline)
+        if (character == '.' || character == '?' || character == '\n') {
+            addSentence(sentences, currentSentence);
+            continue;
+        }
+
+        currentSentence += character;
+
+    } // end for loop
+    // Add any remaining sentence at the end of the file; if empty, nothing will be added to sentences list
+    addSentence(sentences, currentSentence);
 }
 
 // Read a file from input
@@ -44,15 +52,15 @@ std::string getText(std::string& fname) {
     return fileText;
 }
 
+
 void wordpairMapping(std::vector<std::string>& sentences, std::map<std::pair<std::string, std::string>, int>& wordpairFreq_map) {
     for (const auto& sentence : sentences) {
-        std::set<std::string> words; // Use a set instead of a vector
+        std::set<std::string> words; // Use a set
         std::stringstream ss(sentence);
         std::string word;
         while (ss >> word) {
             // remove punctuation and make word lowercase
-            if (std::ispunct(word.back()))
-                word.pop_back();
+
             std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 
             words.insert(word);
@@ -75,5 +83,19 @@ void wordpairMapping(std::vector<std::string>& sentences, std::map<std::pair<std
 void freqWordpairMmap(std::map< std::pair<std::string,std::string>, int> &wordpairFreq_map, std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_mmap ){
     for (const auto& pair : wordpairFreq_map) {
         freqWordpair_mmap.insert(std::make_pair(pair.second, pair.first));
+    }
+}
+
+void printWordpairs(std::multimap<int, std::pair<std::string, std::string>>& freqWordpair_multimap, std::string outFname, int topCnt, int botCnt) {
+    std::ofstream out(outFname);
+    if (out.is_open()) {
+        for (const auto& pair : freqWordpair_multimap) {
+            out << "<" << pair.second.first << ", " << pair.second.second << ">: " << pair.first << std::endl;
+        }
+        out.close();
+    }
+    else {
+        std::cerr << "Error opening file: " << outFname << std::endl;
+        return;
     }
 }
