@@ -1,2 +1,0 @@
-Hello, I am a student at San Francisco State University.
-I am currently taking CSC-340. What is your name?
