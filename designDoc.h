@@ -11,22 +11,25 @@
    Randolf Uy
    Avinh Huynh
 
+ * Assisted by AI.
 
- 
 1. Describe your algorithm for the sentenceSplitter( ) function in pseudocode.
 Input:
    a string of text
 Output:
    a list of sentences
 Code:
-    Initialize an empty string for the current sentence
-    Read the text from the file
+    Start with an empty collection to hold sentences
+    Read the entire text from the file
+        Begin compiling a sentence from the text:
+            Ignore adding starting spaces or quotation marks
+            Add characters to the sentence untile we reach an end of sentence delimiter (period, question mark, new line)
+            Then, save the sentence to our collection of sentences.
+            Repeat until reading the whole file.
 
-    For each character in the text:
-        If the character is a space or quote and the current sentence is empty, skip it
-        If the character is a period, question mark, or newline, add the current sentence to the list and clear it
-        Otherwise, add the character to the current sentence
+    Return the collection of sentences.
 
+Time complexity: O(n)) where (n) is the number of characters in the text.
 
 
 2. Describe your algorithm for the wordpairMapping( ) function in pseudocode.
@@ -34,28 +37,24 @@ Input:
    a list of sentences,
    
 Output:
-   a set of pairs with number of occurences in the supplies sentences
+   a mapping of word pairs to their number of occurrences
    
 Code:
-For each sentence in sentences:
-    Initialize an empty set called words
-    Convert sentence into a stream
-    Initialize an empty string called word
+    Process each sentence individually:
+       Normalize each word in the sentence by converting it to lowercase.
+       Store all unique words from the sentence, avoiding duplicates.
 
-    While there are words in the stream:
-        Read a word from the stream
-        Convert the word to lowercase
-        Add the word to the set words
+    Generate all possible pairs from the unique words in alphabetical order:
+       Ensure that for any pair (word1, word2), word1 alphabetically precedes word2.
+       For each pair of unique words:
+         If this is the first occurrence of this alphabetized pair, record the pair with a count of one.
+         If this pair has been seen before, increment the existing count for this pair.
 
-    For each word i in the set words:
-        For each word j in the set words that comes after i:
-            Create a pair of words (i, j)
+    Continue processing until all sentences have been handled.
 
-            If the pair (i, j) is not in the map wordpairFreq_map:
-                Add the pair (i, j) to the map wordpairFreq_map with a count of 1
-            Else:
-                Increment the count of the pair (i, j) in the map wordpairFreq_map by 1
+    Return the mapping of alphabetized word pairs with their respective counts of occurrences.
 
+ Time complexity: O(n * u^2 * w) where n is the number of sentences, u is the average number of unique words per sentence, and w is the average length of the words.
 
 
 3. Describe your algorithm for the freqWordpairMmap( ) function in pseudocode.
@@ -66,50 +65,44 @@ Output:
     a multimap of word pairs and their frequencies with frequency as key and word pair as value
 
 Code:
-    Initialize an empty multimap called freqWordpair_mmap
+    Prepare a container to sort word pairs by their frequency
 
-    For each pair in the map wordpairFreq_map:
-        Add the pair to the multimap freqWordpair_mmap with the frequency as the key and the pair as the value
+    Go through each word pair and their associated frequency:
+        For each pair, organize them so that their frequencies come first, followed by the word pairs.
 
-    Return the multimap freqWordpair_mmap
+    Add each reordered pair into the prepared container, ensuring they are sorted by frequency.
 
+    Return the container that now holds word pairs neatly organized by how often they appear.
+
+Time complexity: O(m log(m)) where m is the number of word pairs.
 
 
 4. Describe your algorithm for the printWordpairs( ) function in pseudocode.
 Input:
     a multimap of word pairs and their frequencies with frequency as key and word pair as value
     a string for the output file name
-    an integer for the number of top pairs to print
-    an integer for the number of bottom pairs to print
+    an integer for the number of top pairs to print, topCnt
+    an integer for the number of bottom pairs to print, botCnt
 
 Output:
     a file with the top and bottom pairs and their frequencies
 
 Code:
-    Open the output file for writing
+    Begin by preparing to save the word pairs into a file named according to the specified filename
 
-    Initialize a counter to 0
+    If the file opens successfully:
+       Start by recording the most frequently occurring word pairs:
+            Select and write down ('topCnt') of the most common word pairs from the beginning of the collection.
 
-    Initialize an iterator to the beginning of the multimap freqWordpair_multimap
-    
-    For each from counter 0 to the number of top pairs to print:
-        write the current iterator's pair and frequency to the output file
-        increment counter
-        increment iterator
+       Then record the least frequently occurring word pairs:
+         Move to the position that represents the less common word pairs.
+         Select and write down ('botCnt') of the least common word pairs from this position.
 
-    Initialize a counter to 0
+       Close the file once all selected word pairs have been written.
 
-    Initialize an iterator to the end of the multimap freqWordpair_multimap
+    If unable to write to the file, indicate an error concerning file access.
 
-    Advance iterator pointer back by the number of bottom pairs to print
-    
-    For each from counter 0 to the number of bottom pairs to print:
-        write the current iterator's pair and frequency to the output file
-        increment counter
-        increment iterator
-
-    Close the output file
-
+Time complexity: (O(topCnt + botCnt))
 
 
 5. What built-in and/or user-defined data types are you going to use and why?
@@ -130,7 +123,5 @@ Code:
     - Pair<string, string>: to store the word pairs
     - Map<Pair<string, string>, int>: to store the word pairs and their frequencies
     - Multimap<int, Pair<string, string>>: to store the word pairs and their frequencies sorted by frequency
-
-
 
 */
