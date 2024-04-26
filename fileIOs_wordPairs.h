@@ -10,26 +10,103 @@
 #include <algorithm>
 #include <set>
 
+/**
+ * @brief Adds a non-empty sentence to a vector and clears the sentence.
+ *
+ * This function checks if the provided `currentSentence` is non-empty. If it is, the sentence
+ * is added to the `sentences` vector. After adding the sentence, it clears `currentSentence`
+ * to prepare for the next sentence collection. This is useful in contexts where sentences are
+ * accumulated and processed sequentially.
+ *
+ * @param sentences A reference to a vector of strings where the sentence will be added.
+ * @param currentSentence A reference to a string that contains the current sentence to be added.
+ *        This string will be cleared after adding to the vector if it is not empty.
+ */
+void addSentence(std::vector<std::string> &sentences, std::string &currentSentence);
+
+/**
+ * @brief Splits the contents of a file into sentences and stores them into a vector.
+ *
+ * This function reads the contents of a file specified by the file name. It then parses the text
+ * content and divides it into sentences based on punctuation marks and newline characters. Each
+ * detected sentence is added to the provided vector. Sentences are determined by the presence
+ * of periods, question marks, or newline characters. Leading whitespaces and quotation marks
+ * are ignored while identifying the start of a new sentence.
+ *
+ * @param fname A reference to a string containing the filename from which to read the text.
+ * @param sentences A reference to a vector of strings where the discovered sentences will be stored.
+ */
 void sentenceSplitter(std::string &fname, std::vector<std::string> &sentences);
 
+/**
+ * @brief Reads the entire content of a file into a single string.
+ *
+ * This function attempts to open a file specified by the filename and reads its contents into a string.
+ * If the file is successfully opened, it reads the file line by line, appending each line to the
+ * resultant string along with a newline character. If the file cannot be opened, it logs an error message
+ * to the standard error stream indicating the issue, which could be due to the file not being found or
+ * permission being denied. The function will return an empty string if it fails to open the file.
+ *
+ * @param fname A reference to a string containing the filename to read from.
+ * @return A string containing the content of the file, or an empty string if the file could not be opened.
+ */
 std::string getText(std::string &fname);
 
+/**
+ * @brief Maps and counts frequency of unique word pairs in sentences.
+ *
+ * This function processes a list of sentences, extracting and normalizing words by removing punctuation
+ * and converting them to lowercase. It uses a set to collect unique words from each sentence. Then, for each
+ * unique pair of words within a sentence, it creates a pair and maps it in a map with an integer that tracks
+ * the frequency of each word pair's occurrence across all sentences. If a pair is encountered for the first
+ * time, it is added to the map with a count of 1. If the pair already exists in the map, its count is incremented.
+ *
+ * @param sentences A reference to a vector of strings containing sentences.
+ * @param wordpairFreq_map A reference to a map where keys are pairs of strings (word pairs) and values are integers representing the frequency of each word pair.
+ */
 void wordpairMapping(std::vector<std::string> &sentences,
                      std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map);
 
+/**
+ * @brief Transfers word pair frequencies into a multimap sorted by frequency.
+ *
+ * This function takes each word pair and its associated frequency from a map and inserts them into a multimap.
+ * In this multimap, the frequency of the word pairs serves as the key, which allows the entries to be sorted
+ * by frequency. The word pairs then become the values. This structure is especially useful for quick lookup,
+ * sorting, and iterating through word pairs based primarily on their frequency of occurrence.
+ *
+ * @param wordpairFreq_map A reference to a map from which word pairs and their frequencies are read.
+ *        The map's keys are word pairs (pair of strings), and the values are integers representing the frequencies.
+ * @param freqWordpair_mmap A reference to a multimap where the integer frequencies are the keys and
+ *        the word pairs (pair of strings) are the values. This is filled by the function to allow sorting
+ *        and efficient frequency-based retrieval.
+ */
 void freqWordpairMmap(std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map,
                       std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_mmap);
 
+/**
+ * @brief Outputs the most and least frequent word pairs to a specified file.
+ *
+ * This function writes the top and bottom 'n' frequent word pairs from a multimap to a specified output file.
+ * The multimap should have frequencies as keys and word pairs as values, sorted by frequency. It first
+ * writes the top `topCnt` frequent pairs from the beginning of the multimap. Then, it writes the bottom
+ * `botCnt` frequent pairs starting from the end of the multimap. If there is an issue in opening the output
+ * file, an error message is displayed.
+ *
+ * @param freqWordpair_multimap A reference to a multimap that contains word pairs sorted by their frequencies.
+ * @param outFname The filename where the result will be printed.
+ * @param topCnt The number of top frequent word pairs to print.
+ * @param botCnt The number of least frequent word pairs to print.
+ */
 void
 printWordpairs(std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_multimap, std::string outFname,
                int topCnt,
                int botCnt);
 
+
 // Standardize Unit Testing
 // 2 unit tests for each function: sentenceSplitter(), wordPairMapping(), freqWordPairMmap()
-// 2 end to end unit tests
 // 1 end to end unit test for the file the professor provided
-
 
 inline bool wordPairMappingUnitTest1() {
     std::vector<std::string> sentences = {
@@ -300,8 +377,6 @@ inline bool steveJobsSentenceSplitterUnitTest() {
     }
     test = true;
     return test;
-
-
 }
 
 inline void runTests() {
@@ -326,7 +401,6 @@ inline void runTests() {
     } else {
         std::cout << "Failed Freq-word Multi-map Test 2" << std::endl;
     }
-
     if (steveJobsUnitTestEndToEnd()) {
         std::cout << "Passed Steve-Jobs-Speech End to End Test" << std::endl;
     } else {
