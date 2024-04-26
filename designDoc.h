@@ -11,6 +11,7 @@
    Randolf Uy
    Avinh Huynh
 
+
  
 1. Describe your algorithm for the sentenceSplitter( ) function in pseudocode.
 Input:
@@ -54,6 +55,82 @@ For each sentence in sentences:
                 Add the pair (i, j) to the map wordpairFreq_map with a count of 1
             Else:
                 Increment the count of the pair (i, j) in the map wordpairFreq_map by 1
- 
+
+
+
+3. Describe your algorithm for the freqWordpairMmap( ) function in pseudocode.
+Input:
+    a map of word pairs and their frequencies with wird pair as key and frequency as value
+
+Output:
+    a multimap of word pairs and their frequencies with frequency as key and word pair as value
+
+Code:
+    Initialize an empty multimap called freqWordpair_mmap
+
+    For each pair in the map wordpairFreq_map:
+        Add the pair to the multimap freqWordpair_mmap with the frequency as the key and the pair as the value
+
+    Return the multimap freqWordpair_mmap
+
+
+
+4. Describe your algorithm for the printWordpairs( ) function in pseudocode.
+Input:
+    a multimap of word pairs and their frequencies with frequency as key and word pair as value
+    a string for the output file name
+    an integer for the number of top pairs to print
+    an integer for the number of bottom pairs to print
+
+Output:
+    a file with the top and bottom pairs and their frequencies
+
+Code:
+    Open the output file for writing
+
+    Initialize a counter to 0
+
+    Initialize an iterator to the beginning of the multimap freqWordpair_multimap
+    
+    For each from counter 0 to the number of top pairs to print:
+        write the current iterator's pair and frequency to the output file
+        increment counter
+        increment iterator
+
+    Initialize a counter to 0
+
+    Initialize an iterator to the end of the multimap freqWordpair_multimap
+
+    Advance iterator pointer back by the number of bottom pairs to print
+    
+    For each from counter 0 to the number of bottom pairs to print:
+        write the current iterator's pair and frequency to the output file
+        increment counter
+        increment iterator
+
+    Close the output file
+
+
+
+5. What built-in and/or user-defined data types are you going to use and why?
+
+    // Thanks copilot for writing this
+    Built-in data types:
+    - std::string: to store the text, sentences, and words
+    - std::vector: to store the list of sentences
+    - std::map: to store the word pairs and their frequencies
+    - std::multimap: to store the word pairs and their frequencies sorted by frequency
+    - std::set: to store the unique words in a sentence
+    - std::pair: to store the word pairs
+    - std::stringstream: to convert the sentence into a stream
+    - std::ifstream: to read the text from a file
+    - std::ofstream: to write the word pairs and their frequencies to a file
+
+    User-defined data types:
+    - Pair<string, string>: to store the word pairs
+    - Map<Pair<string, string>, int>: to store the word pairs and their frequencies
+    - Multimap<int, Pair<string, string>>: to store the word pairs and their frequencies sorted by frequency
+
+
 
 */
