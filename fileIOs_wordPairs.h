@@ -64,8 +64,7 @@ std::string getText(std::string &fname);
  * @param sentences A reference to a vector of strings containing sentences.
  * @param wordpairFreq_map A reference to a map where keys are pairs of strings (word pairs) and values are integers representing the frequency of each word pair.
  */
-void wordpairMapping(std::vector<std::string> &sentences,
-                     std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map);
+void wordpairMapping(std::vector<std::string> &sentences, std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map);
 
 /**
  * @brief Transfers word pair frequencies into a multimap sorted by frequency.
@@ -81,8 +80,7 @@ void wordpairMapping(std::vector<std::string> &sentences,
  *        the word pairs (pair of strings) are the values. This is filled by the function to allow sorting
  *        and efficient frequency-based retrieval.
  */
-void freqWordpairMmap(std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map,
-                      std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_mmap);
+void freqWordpairMmap(std::map<std::pair<std::string, std::string>, int> &wordpairFreq_map, std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_mmap);
 
 /**
  * @brief Outputs the most and least frequent word pairs to a specified file.
@@ -98,10 +96,7 @@ void freqWordpairMmap(std::map<std::pair<std::string, std::string>, int> &wordpa
  * @param topCnt The number of top frequent word pairs to print.
  * @param botCnt The number of least frequent word pairs to print.
  */
-void
-printWordpairs(std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_multimap, std::string outFname,
-               int topCnt,
-               int botCnt);
+void printWordpairs(std::multimap<int, std::pair<std::string, std::string> > &freqWordpair_multimap, std::string outFname, int topCnt, int botCnt);
 
 
 // Standardize Unit Testing
